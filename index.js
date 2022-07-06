@@ -9,7 +9,7 @@ import { register, login, getMe } from './controllers/UserController.js';
 import validationErrors from './utils/validationErrors.js';
 
 mongoose
-    .connect(process.env.MONGODB_URI)
+    .connect('mongodb+srv://Reiser95:Google222@cluster0.ztcu1.mongodb.net/?retryWrites=true&w=majority')
     .then(() => console.log('DB ok'))
     .catch((err) => console.log('DB error', err));
 
@@ -17,6 +17,12 @@ const app = express();
 
 app.use(express.json());
 
+app.get('/hello', (req, res) => {
+    return res.json({
+        success: true,
+        message: 'Hello world'
+    })
+});
 app.get('/auth/me', checkAuth, getMe);
 app.post('/auth/login', loginValidation, validationErrors, login);
 app.post('/auth/register', registerValidation, validationErrors, register);
