@@ -1,5 +1,6 @@
 import express from 'express';
 import mongoose from 'mongoose';
+import cors from 'cors';
 
 import { registerValidation, loginValidation } from './validations.js';
 
@@ -15,14 +16,9 @@ mongoose
 
 const app = express();
 
+app.use(cors());
 app.use(express.json());
 
-app.get('/hello', (req, res) => {
-    return res.json({
-        success: true,
-        message: 'Hello world'
-    })
-});
 app.get('/auth/me', checkAuth, getMe);
 app.post('/auth/login', loginValidation, validationErrors, login);
 app.post('/auth/register', registerValidation, validationErrors, register);
